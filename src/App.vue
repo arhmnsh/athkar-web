@@ -46,9 +46,9 @@ onBeforeUnmount(() => {
   <div class="app-shell" :class="{ 'is-header-hidden': isHeaderHidden }">
     <header class="app-topbar">
       <div class="topbar-left">
-        <ModeToggle />
         <h1 class="app-title">Athkār</h1>
       </div>
+      <ModeToggle />
     </header>
     <main>
       <RouterView v-slot="{ Component, route: activeRoute }">

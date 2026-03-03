@@ -39,7 +39,7 @@ body {
   z-index: 20;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   direction: ltr;
   gap: 12px;
   padding: 10px 12px 8px;
@@ -173,15 +173,18 @@ main {
   font-size: 0.78rem;
   font-weight: 700;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  position: relative;
+  padding-left: 30px;
 }
 
 .reset-btn::before {
   content: "↺";
   font-size: 0.95rem;
   line-height: 1;
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .mode-fab:active {
