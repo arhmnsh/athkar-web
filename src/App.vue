@@ -1,10 +1,13 @@
 <script setup>
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
 import ModeToggle from './components/ModeToggle.vue';
 import { resetAllCounts } from './data/progressStore';
 
 const isHeaderHidden = ref(false);
+const route = useRoute();
+const routeTransition = ref('route-forward');
 let lastScrollY = 0;
 
 function handleScroll() {
@@ -29,6 +32,14 @@ function resetCounters() {
   }
   resetAllCounts();
 }
+
+watch(
+  () => route.name,
+  (next) => {
+    routeTransition.value = next === 'athkar-details' ? 'route-forward' : 'route-back';
+  },
+  { immediate: true },
+);
 
 onMounted(() => {
   lastScrollY = window.scrollY || 0;
@@ -55,7 +66,11 @@ onBeforeUnmount(() => {
       </div>
     </header>
     <main>
-      <RouterView />
+      <RouterView v-slot="{ Component, route: activeRoute }">
+        <Transition :name="routeTransition" mode="out-in">
+          <component :is="Component" :key="activeRoute.fullPath" />
+        </Transition>
+      </RouterView>
     </main>
   </div>
 </template>
