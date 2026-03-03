@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeUnmount, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 import AthkarListItem from '../components/AthkarListItem.vue';
@@ -16,6 +16,33 @@ import {
 const router = useRouter();
 const showConfetti = ref(false);
 let confettiTimer = null;
+const LIST_SCROLL_KEY = 'athkar-list-scroll-y';
+
+function saveListScroll() {
+  try {
+    sessionStorage.setItem(LIST_SCROLL_KEY, String(window.scrollY || 0));
+  } catch {
+    // ignore storage failures
+  }
+}
+
+function restoreListScroll() {
+  try {
+    const raw = sessionStorage.getItem(LIST_SCROLL_KEY);
+    if (!raw) {
+      return;
+    }
+    const y = Number(raw);
+    if (!Number.isFinite(y) || y <= 0) {
+      return;
+    }
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: y, behavior: 'auto' });
+    });
+  } catch {
+    // ignore storage failures
+  }
+}
 
 const items = computed(() => {
   progressVersion.value;
@@ -44,9 +71,14 @@ watch(allCompleted, (next, prev) => {
 });
 
 onBeforeUnmount(() => {
+  saveListScroll();
   if (confettiTimer) {
     clearTimeout(confettiTimer);
   }
+});
+
+onMounted(() => {
+  restoreListScroll();
 });
 
 function handleIncrement(athkar) {
@@ -54,6 +86,7 @@ function handleIncrement(athkar) {
 }
 
 function openDetails(athkar) {
+  saveListScroll();
   router.push({ name: 'athkar-details', params: { id: athkar.id } });
 }
 </script>
