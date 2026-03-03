@@ -4,7 +4,6 @@ import { useRoute, useRouter } from 'vue-router';
 
 import { athkarData } from '../data/athkarData';
 import { currentMode, resolveAthkarByMode } from '../data/modeStore';
-import { getProgress, getReadCount, progressVersion } from '../data/progressStore';
 
 const route = useRoute();
 const router = useRouter();
@@ -18,32 +17,12 @@ const athkar = computed(() => {
   return resolveAthkarByMode(matched, currentMode.value);
 });
 
-const currentCount = computed(() => {
-  progressVersion.value;
-  if (!athkar.value) {
-    return 0;
-  }
-  return getReadCount(athkar.value.id, currentMode.value);
-});
-
-const progress = computed(() => {
-  progressVersion.value;
-  if (!athkar.value) {
-    return 0;
-  }
-  return getProgress(athkar.value.id, athkar.value.read_count, currentMode.value);
-});
 </script>
 
 <template>
   <section v-if="athkar" class="details-wrap">
     <div class="details-shell">
       <button class="back-btn" type="button" @click="router.push('/')">Back to list</button>
-
-      <div class="details-progress">
-        <div class="details-progress-fill" :style="{ width: `${progress}%` }" />
-        <span>{{ currentCount }} / {{ athkar.read_count }} complete</span>
-      </div>
 
       <article class="details-card">
         <section class="details-section">

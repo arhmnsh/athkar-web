@@ -355,30 +355,7 @@ main {
   font-weight: 600;
   letter-spacing: 0.01em;
   color: var(--text-strong);
-}
-
-.details-progress {
-  margin-top: 14px;
-  margin-bottom: 18px;
-  position: relative;
-  border: 1px solid rgba(255, 247, 230, 0.28);
-  border-radius: 999px;
-  overflow: hidden;
-  min-height: 40px;
-  display: flex;
-  align-items: center;
-  padding: 0 14px;
-  background: rgba(63, 20, 10, 0.22);
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-}
-
-.details-progress-fill {
-  position: absolute;
-  inset: 0 0 0 auto;
-  background: rgba(255, 255, 255, 0.26);
-  transition: width 280ms ease;
+  margin-bottom: 12px;
 }
 
 .confetti-overlay {
@@ -400,21 +377,18 @@ main {
   animation: confetti-fall var(--duration) linear var(--delay) forwards;
 }
 
-.details-progress span {
-  position: relative;
-  z-index: 2;
-}
-
 .details-card {
   border: 1px solid rgba(255, 247, 230, 0.22);
   border-radius: 16px;
   padding: 18px 16px 8px;
   background: rgba(95, 33, 20, 0.28);
   backdrop-filter: blur(3px);
+  direction: ltr;
+  text-align: left;
 }
 
 .details-section {
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .details-section.source {
@@ -422,12 +396,13 @@ main {
 }
 
 .details-label {
-  margin: 0 0 10px;
+  margin: 0 0 6px;
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: rgba(255, 245, 229, 0.7);
   font-weight: 700;
+  text-align: left;
 }
 
 .latin-block,
@@ -436,12 +411,15 @@ main {
   margin: 0;
   line-height: 1.74;
   color: rgba(255, 249, 238, 0.92);
+  text-align: left;
+  direction: ltr;
 }
 
 .arabic-block {
   text-align: right;
   margin: 0;
   font-family: "Geeza Pro", "Noto Naskh Arabic", "Amiri", serif;
+  direction: rtl;
   font-size: clamp(1.36rem, 2.8vw, 2.04rem);
   font-weight: 600;
   line-height: 1.82;
