@@ -51,6 +51,21 @@ body {
   will-change: transform;
 }
 
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 1.36rem;
+  line-height: 1;
+  font-weight: 800;
+  color: #fff8ec;
+  letter-spacing: 0.01em;
+}
+
 .app-shell.is-header-hidden .app-topbar {
   transform: translateY(-100%);
   opacity: 0.96;
@@ -99,14 +114,29 @@ main {
 .list-footer {
   padding: 14px 12px 28px;
   display: grid;
-  gap: 10px;
+  gap: 12px;
   justify-items: center;
 }
 
+.byline-wrap {
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+}
+
 .app-byline {
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   color: rgba(255, 248, 232, 0.92);
   text-decoration: none;
+}
+
+.app-byline.name {
+  font-weight: 600;
+}
+
+.app-byline.site {
+  font-size: 0.8rem;
+  opacity: 0.94;
 }
 
 .app-byline:hover {
@@ -143,6 +173,15 @@ main {
   font-size: 0.78rem;
   font-weight: 700;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.reset-btn::before {
+  content: "↺";
+  font-size: 0.95rem;
+  line-height: 1;
 }
 
 .mode-fab:active {

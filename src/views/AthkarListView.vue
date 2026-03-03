@@ -117,9 +117,14 @@ function resetCounters() {
     </div>
     <footer class="list-footer">
       <button class="reset-btn" type="button" @click="resetCounters">Reset counters</button>
-      <a class="app-byline" href="https://arhmn.sh" target="_blank" rel="noopener noreferrer">
-        by AbdurRahaman Shah &nbsp; arhmn.sh
-      </a>
+      <div class="byline-wrap">
+        <a class="app-byline name" href="https://arhmn.sh" target="_blank" rel="noopener noreferrer">
+          by AbdurRahaman Shah
+        </a>
+        <a class="app-byline site" href="https://arhmn.sh" target="_blank" rel="noopener noreferrer">
+          arhmn.sh
+        </a>
+      </div>
     </footer>
     <ConfettiOverlay :visible="showConfetti" />
   </section>
