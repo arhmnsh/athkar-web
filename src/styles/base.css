@@ -284,7 +284,7 @@ main {
 
 .body-hit,
 .details-hit,
-.back-btn {
+.back-icon-btn {
   border: 0;
   background: transparent;
   color: inherit;
@@ -379,14 +379,17 @@ main {
   margin: 0 auto;
 }
 
-.back-btn {
-  border: 1px solid rgba(255, 247, 230, 0.42);
+.back-icon-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 247, 230, 0.34);
   border-radius: 999px;
-  padding: 8px 15px;
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  background: rgba(0, 0, 0, 0.14);
   color: var(--text-strong);
-  margin-bottom: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 1.25rem;
+  margin-bottom: 14px;
 }
 
 .confetti-overlay {
@@ -408,18 +411,10 @@ main {
   animation: confetti-fall var(--duration) linear var(--delay) forwards;
 }
 
-.details-card {
-  border: 1px solid rgba(255, 247, 230, 0.22);
-  border-radius: 16px;
-  padding: 18px 16px 8px;
-  background: rgba(95, 33, 20, 0.28);
-  backdrop-filter: blur(3px);
-  direction: ltr;
-  text-align: left;
-}
-
 .details-section {
   margin-bottom: 16px;
+  direction: ltr;
+  text-align: left;
 }
 
 .details-section.source {
