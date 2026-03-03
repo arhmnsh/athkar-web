@@ -3,7 +3,6 @@ import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 import ModeToggle from './components/ModeToggle.vue';
-import { resetAllCounts } from './data/progressStore';
 
 const isHeaderHidden = ref(false);
 const route = useRoute();
@@ -23,14 +22,6 @@ function handleScroll() {
   }
 
   lastScrollY = currentY;
-}
-
-function resetCounters() {
-  const confirmed = window.confirm('Reset all athkar counters?');
-  if (!confirmed) {
-    return;
-  }
-  resetAllCounts();
 }
 
 watch(
@@ -54,16 +45,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="app-shell" :class="{ 'is-header-hidden': isHeaderHidden }">
     <header class="app-topbar">
-      <div class="topbar-left">
-        <ModeToggle />
-        <button class="reset-btn" type="button" @click="resetCounters">Reset</button>
-      </div>
-      <div class="app-brand">
-        <h1>Athkār</h1>
-        <a class="app-byline" href="https://arhmn.sh" target="_blank" rel="noopener noreferrer">
-          by AbdurRahaman Shah &nbsp; arhmn.sh
-        </a>
-      </div>
+      <ModeToggle />
     </header>
     <main>
       <RouterView v-slot="{ Component, route: activeRoute }">

@@ -11,6 +11,7 @@ import {
   getReadCount,
   incrementReadCount,
   progressVersion,
+  resetAllCounts,
 } from '../data/progressStore';
 
 const router = useRouter();
@@ -89,6 +90,14 @@ function openDetails(athkar) {
   saveListScroll();
   router.push({ name: 'athkar-details', params: { id: athkar.id } });
 }
+
+function resetCounters() {
+  const confirmed = window.confirm('Reset all athkar counters?');
+  if (!confirmed) {
+    return;
+  }
+  resetAllCounts();
+}
 </script>
 
 <template>
@@ -106,6 +115,12 @@ function openDetails(athkar) {
         @details="openDetails(athkar)"
       />
     </div>
+    <footer class="list-footer">
+      <button class="reset-btn" type="button" @click="resetCounters">Reset counters</button>
+      <a class="app-byline" href="https://arhmn.sh" target="_blank" rel="noopener noreferrer">
+        by AbdurRahaman Shah &nbsp; arhmn.sh
+      </a>
+    </footer>
     <ConfettiOverlay :visible="showConfetti" />
   </section>
 </template>

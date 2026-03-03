@@ -39,7 +39,7 @@ body {
   z-index: 20;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   direction: ltr;
   gap: 12px;
   padding: 10px 12px 8px;
@@ -55,42 +55,6 @@ body {
   transform: translateY(-100%);
   opacity: 0.96;
   pointer-events: none;
-}
-
-.topbar-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.app-brand {
-  margin-left: auto;
-  text-align: right;
-  line-height: 1.15;
-}
-
-.app-brand h1 {
-  margin: 0;
-  font-size: 1.24rem;
-  font-weight: 700;
-  color: #fff8ec;
-}
-
-.app-byline {
-  display: inline-block;
-  margin-top: 3px;
-  font-size: 0.8rem;
-  color: rgba(255, 248, 232, 0.9);
-  text-decoration: none;
-}
-
-.app-brand a {
-  color: rgba(255, 248, 232, 0.98);
-  text-decoration: none;
-}
-
-.app-brand a:hover {
-  text-decoration: underline;
 }
 
 main {
@@ -132,6 +96,23 @@ main {
   width: 100%;
 }
 
+.list-footer {
+  padding: 14px 12px 28px;
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+}
+
+.app-byline {
+  font-size: 0.82rem;
+  color: rgba(255, 248, 232, 0.92);
+  text-decoration: none;
+}
+
+.app-byline:hover {
+  text-decoration: underline;
+}
+
 .mode-fab {
   width: 52px;
   height: 52px;
@@ -155,11 +136,11 @@ main {
 
 .reset-btn {
   border: 1px solid rgba(255, 247, 232, 0.34);
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.14);
   color: rgba(255, 248, 236, 0.96);
   border-radius: 999px;
-  padding: 8px 10px;
-  font-size: 0.74rem;
+  padding: 8px 12px;
+  font-size: 0.78rem;
   font-weight: 700;
   cursor: pointer;
 }
