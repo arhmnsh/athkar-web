@@ -33,7 +33,7 @@ function showToast(message) {
 function toggleMode() {
   const nextMode = isEvening.value ? MORNING_MODE : EVENING_MODE;
   setMode(nextMode);
-  showToast(nextMode === MORNING_MODE ? 'Morning athkar active' : 'Evening athkar active');
+  showToast(nextMode === MORNING_MODE ? 'Morning athkar' : 'Evening athkar');
 }
 
 onBeforeUnmount(() => {
