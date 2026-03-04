@@ -289,6 +289,9 @@ main {
   min-height: 110px;
   border-bottom: 1px solid var(--divider);
   background: linear-gradient(180deg, var(--row-top), var(--row-bottom));
+  transition:
+    background 140ms ease,
+    filter 140ms ease;
 }
 
 .athkar-row:last-child {
@@ -361,16 +364,16 @@ main {
   text-align: right;
   direction: rtl;
   padding: 16px 20px 14px 6px;
-  transform: scale(1);
-  transition:
-    transform 120ms ease,
-    filter 120ms ease;
-  transform-origin: center;
 }
 
-.body-hit:active {
-  transform: scale(0.985);
-  filter: brightness(0.97);
+.athkar-row:has(.body-hit:active) {
+  background: linear-gradient(180deg, var(--row-bottom), var(--row-top));
+  filter: brightness(0.96);
+}
+
+.athkar-row.is-complete:has(.body-hit:active) {
+  background: linear-gradient(180deg, #66cb49, #79d85e);
+  filter: brightness(0.96);
 }
 
 .arabic {
