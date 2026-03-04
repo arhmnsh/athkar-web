@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 import AthkarListItem from '../components/AthkarListItem.vue';
@@ -83,7 +83,41 @@ onMounted(() => {
 });
 
 function handleIncrement(athkar) {
+  const currentCount = getReadCount(athkar.id, currentMode.value);
+  const willCompleteThisTap = currentCount < athkar.read_count && currentCount + 1 >= athkar.read_count;
+
+  let anchorTop = null;
+  let nextAthkarId = null;
+
+  if (willCompleteThisTap) {
+    const currentIndex = items.value.findIndex((item) => item.id === athkar.id);
+    if (currentIndex >= 0 && currentIndex < items.value.length - 1) {
+      nextAthkarId = items.value[currentIndex + 1].id;
+      const currentRow = document.querySelector(`.athkar-row[data-athkar-id="${athkar.id}"]`);
+      if (currentRow) {
+        anchorTop = currentRow.getBoundingClientRect().top;
+      }
+    }
+  }
+
   incrementReadCount(athkar.id, athkar.read_count, currentMode.value);
+
+  if (willCompleteThisTap && anchorTop !== null && nextAthkarId !== null) {
+    nextTick(() => {
+      requestAnimationFrame(() => {
+        const nextRow = document.querySelector(`.athkar-row[data-athkar-id="${nextAthkarId}"]`);
+        if (!nextRow) {
+          return;
+        }
+        const delta = nextRow.getBoundingClientRect().top - anchorTop;
+        if (Math.abs(delta) < 1) {
+          return;
+        }
+        window.scrollBy({ top: delta, behavior: 'smooth' });
+        saveListScroll();
+      });
+    });
+  }
 }
 
 function openDetails(athkar) {

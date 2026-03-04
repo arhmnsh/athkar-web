@@ -42,7 +42,12 @@ const isComplete = computed(() => props.progress >= 100);
 </script>
 
 <template>
-  <article class="athkar-row" :class="{ 'is-complete': isComplete }" :style="rowStyle">
+  <article
+    class="athkar-row"
+    :class="{ 'is-complete': isComplete }"
+    :style="rowStyle"
+    :data-athkar-id="athkar.id"
+  >
     <div class="progress-fill" :style="{ width: `${progress}%` }" />
     <aside class="side-rail">
       <button
