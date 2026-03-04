@@ -9,6 +9,7 @@
 
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html,
@@ -23,6 +24,7 @@ body {
   background: linear-gradient(180deg, var(--app-bg-top), var(--app-bg-bottom));
   color: var(--text-strong);
   direction: rtl;
+  touch-action: manipulation;
 }
 
 .app-shell {
@@ -345,25 +347,6 @@ main {
   text-align: right;
   direction: rtl;
   padding: 16px 20px 14px 6px;
-  position: relative;
-  isolation: isolate;
-}
-
-.body-hit::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: calc(-1 * var(--rail-w));
-  right: 0;
-  border-radius: 0;
-  background: transparent;
-  z-index: -1;
-  pointer-events: none;
-}
-
-.body-hit:active::before {
-  background: rgba(255, 255, 255, 0.14);
 }
 
 .arabic {
