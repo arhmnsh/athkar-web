@@ -149,7 +149,7 @@ main {
   width: 52px;
   height: 52px;
   flex: 0 0 52px;
-  border: 1px solid rgba(255, 247, 232, 0.3);
+  border: 0;
   border-radius: 999px;
   background: linear-gradient(180deg, #8ec0f3, #4f93d9);
   display: grid;
@@ -157,7 +157,6 @@ main {
   cursor: pointer;
   transition:
     background 420ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 320ms ease,
     transform 200ms ease;
 }
 
@@ -195,7 +194,6 @@ main {
 
 .mode-fab.evening {
   background: linear-gradient(180deg, #f4a465, #e16b3d);
-  border-color: rgba(255, 234, 208, 0.38);
 }
 
 .mode-scene {
@@ -237,6 +235,22 @@ main {
 .mode-fab.evening .mode-scene .sun-rays {
   opacity: 0.45;
   transform: translateY(2px);
+}
+
+.mode-fab.intro {
+  animation: mode-fab-heartbeat 1.8s ease-out 1;
+}
+
+.mode-fab.intro .mode-scene .sun-core {
+  animation: mode-sun-rise 1.45s cubic-bezier(0.22, 1, 0.36, 1) 1;
+}
+
+.mode-fab.evening.intro .mode-scene .sun-core {
+  animation: mode-sun-set 1.45s cubic-bezier(0.22, 1, 0.36, 1) 1;
+}
+
+.mode-fab.intro .mode-scene .sun-rays {
+  animation: mode-rays-breathe 1.5s ease-out 1;
 }
 
 .mode-toast {
@@ -516,6 +530,60 @@ main {
   }
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes mode-fab-heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  16% {
+    transform: scale(1.05);
+  }
+  30% {
+    transform: scale(1);
+  }
+  44% {
+    transform: scale(1.04);
+  }
+  58% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes mode-sun-rise {
+  0% {
+    transform: translateY(7px);
+  }
+  100% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes mode-sun-set {
+  0% {
+    transform: translateY(-7px);
+  }
+  100% {
+    transform: translateY(5px);
+  }
+}
+
+@keyframes mode-rays-breathe {
+  0% {
+    opacity: 0.3;
+    transform: translateY(1px);
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(-4px);
+  }
+  100% {
+    opacity: inherit;
+    transform: inherit;
   }
 }
 

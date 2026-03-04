@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeUnmount, ref } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
 import {
   currentMode,
@@ -16,7 +16,9 @@ const toggleLabel = computed(() =>
 
 const toastVisible = ref(false);
 const toastText = ref('');
+const showIntroMotion = ref(false);
 let toastTimer = null;
+let introTimer = null;
 
 function showToast(message) {
   if (toastTimer) {
@@ -40,6 +42,17 @@ onBeforeUnmount(() => {
   if (toastTimer) {
     clearTimeout(toastTimer);
   }
+  if (introTimer) {
+    clearTimeout(introTimer);
+  }
+});
+
+onMounted(() => {
+  showIntroMotion.value = true;
+  introTimer = setTimeout(() => {
+    showIntroMotion.value = false;
+    introTimer = null;
+  }, 1800);
 });
 </script>
 
@@ -47,7 +60,7 @@ onBeforeUnmount(() => {
   <div class="mode-fab-wrap">
     <button
       class="mode-fab"
-      :class="{ evening: isEvening }"
+      :class="{ evening: isEvening, intro: showIntroMotion }"
       type="button"
       :aria-label="toggleLabel"
       @click="toggleMode"
