@@ -1,0 +1,41 @@
+import posthog from 'posthog-js';
+
+export function initPosthogAnalytics(router) {
+  const publicKey = import.meta.env.VITE_POSTHOG_PUBLIC_KEY;
+  if (!publicKey) {
+    return;
+  }
+
+  const site = import.meta.env.VITE_ANALYTICS_SITE || 'athkar';
+  const siteDomain = import.meta.env.VITE_ANALYTICS_DOMAIN || 'athkar.arhmn.sh';
+
+  posthog.init(publicKey, {
+    api_host: import.meta.env.VITE_POSTHOG_HOST || 'https://us.i.posthog.com',
+    capture_pageview: false,
+    loaded: (ph) => {
+      if (import.meta.env.DEV) {
+        ph.debug();
+      }
+    },
+  });
+
+  posthog.register({
+    site,
+    site_domain: siteDomain,
+  });
+
+  const capturePageview = (path) => {
+    requestAnimationFrame(() => {
+      posthog.capture('$pageview', {
+        $current_url: path,
+        site,
+        site_domain: siteDomain,
+      });
+    });
+  };
+
+  capturePageview(router.currentRoute.value.fullPath);
+  router.afterEach((to) => {
+    capturePageview(to.fullPath);
+  });
+}

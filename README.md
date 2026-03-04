@@ -10,7 +10,6 @@ Responsive Vue app for athkar tracking with:
 ## Run locally
 
 ```bash
-cd web
 npm install
 npm run dev
 ```
@@ -18,14 +17,26 @@ npm run dev
 ## Build
 
 ```bash
-cd web
 npm run build
 ```
 
-Build output will be in `web/dist`.
+Build output will be in `dist`.
+
+## Analytics (PostHog)
+
+Copy `.env.example` to `.env` and set your values:
+
+```bash
+cp .env.example .env
+```
+
+- `VITE_POSTHOG_PUBLIC_KEY`
+- `VITE_POSTHOG_HOST` (default: `https://us.i.posthog.com`)
+- `VITE_ANALYTICS_SITE` (default: `athkar`)
+- `VITE_ANALYTICS_DOMAIN` (default: `athkar.arhmn.sh`)
 
 ## Subdomain deployment
 
-Deploy `web/dist` to your hosting provider, then map a subdomain DNS record (for example `athkar.arhmn.sh`) to that deployment.
+Deploy `dist` to your hosting provider, then map a subdomain DNS record (for example `athkar.arhmn.sh`) to that deployment.
 
-If you host under a path instead of a subdomain root, set Vite `base` in `web/vite.config.js`.
+If you host under a path instead of a subdomain root, set Vite `base` in `vite.config.js`.
