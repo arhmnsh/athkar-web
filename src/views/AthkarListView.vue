@@ -276,8 +276,8 @@ function openBenefitsModal() {
           <div class="tap-row-shadow" />
           <div class="tap-finger">👆</div>
         </div>
-        <p>Tap a row to increment its count.</p>
-        <button type="button" class="tap-hint-close">Got it</button>
+        <p dir="ltr">Tap a row to increment its count.</p>
+        <button type="button" class="tap-hint-close" dir="ltr">Got it</button>
       </div>
     </transition>
   </section>

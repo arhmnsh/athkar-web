@@ -227,6 +227,8 @@ main {
   gap: 10px;
   text-align: center;
   padding: 14px;
+  direction: ltr;
+  unicode-bidi: isolate;
 }
 
 .tap-hint-overlay p {
@@ -234,6 +236,8 @@ main {
   font-size: 0.88rem;
   font-weight: 700;
   color: rgba(255, 250, 242, 0.98);
+  direction: ltr;
+  unicode-bidi: plaintext;
 }
 
 .tap-hint-close {
@@ -244,6 +248,8 @@ main {
   padding: 7px 12px;
   font-size: 0.77rem;
   font-weight: 700;
+  direction: ltr;
+  unicode-bidi: plaintext;
 }
 
 .tap-hint-demo {
