@@ -6,6 +6,7 @@ Responsive Vue app for athkar tracking with:
 - Right-side chevron to open athkar details
 - Details with Arabic, pronunciation, translation, source, and evening variants when available
 - Progress persisted in `localStorage`
+- PWA support (installable + cached offline shell)
 
 ## Run locally
 
