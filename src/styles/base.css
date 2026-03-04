@@ -113,57 +113,156 @@ main {
   width: 100%;
 }
 
-.onboarding-panel {
-  margin: 10px 12px 14px;
-  padding: 14px 14px 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 247, 232, 0.24);
-  background: rgba(69, 23, 12, 0.34);
+.overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 75;
+  background: rgba(12, 9, 8, 0.72);
   backdrop-filter: blur(3px);
+  display: grid;
+  place-items: center;
+  padding: 14px;
+}
+
+.benefits-modal {
+  width: min(760px, 100%);
+  max-height: min(88vh, 860px);
+  overflow: auto;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 248, 232, 0.22);
+  background: rgba(45, 17, 12, 0.95);
+  padding: 14px 14px 12px;
   text-align: left;
   direction: ltr;
 }
 
-.onboarding-panel h2 {
-  margin: 0 0 7px;
-  font-size: 1rem;
+.benefits-modal h2 {
+  margin: 0 0 8px;
+  font-size: 1.06rem;
   font-weight: 800;
-  color: rgba(255, 250, 242, 0.97);
+  color: rgba(255, 250, 242, 0.98);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
-.onboarding-panel p {
-  margin: 0 0 8px;
+.benefits-intro {
+  margin: 0 0 10px;
   font-size: 0.86rem;
   line-height: 1.55;
+  color: rgba(255, 248, 236, 0.92);
+}
+
+.benefits-modal ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.benefits-modal li {
+  padding: 9px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 248, 232, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.benefits-modal li h3 {
+  margin: 0 0 4px;
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: rgba(255, 243, 225, 0.95);
+}
+
+.benefits-modal li p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: rgba(255, 248, 236, 0.88);
+}
+
+.benefits-hadith {
+  margin: 10px 0 12px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.8rem;
+  line-height: 1.5;
   color: rgba(255, 248, 236, 0.9);
 }
 
-.onboarding-panel .hadith {
-  padding: 8px 9px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.onboarding-panel .hadith span {
+.benefits-hadith span {
   display: block;
-  margin-top: 6px;
-  font-size: 0.77rem;
-  color: rgba(255, 248, 232, 0.8);
+  margin-top: 5px;
+  font-size: 0.76rem;
+  color: rgba(255, 248, 232, 0.78);
 }
 
-.onboarding-panel .tap-hint {
-  font-weight: 600;
-}
-
-.onboarding-dismiss {
-  border: 1px solid rgba(255, 247, 232, 0.32);
-  background: rgba(255, 255, 255, 0.08);
+.benefits-close {
+  border: 1px solid rgba(255, 247, 232, 0.34);
+  background: rgba(255, 255, 255, 0.09);
   color: rgba(255, 249, 238, 0.96);
   border-radius: 999px;
-  padding: 7px 12px;
+  padding: 8px 13px;
   font-size: 0.78rem;
   font-weight: 700;
   cursor: pointer;
+}
+
+.tap-hint-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 72;
+  background: rgba(12, 9, 8, 0.36);
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 10px;
+  text-align: center;
+  padding: 14px;
+}
+
+.tap-hint-overlay p {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: rgba(255, 250, 242, 0.98);
+}
+
+.tap-hint-close {
+  border: 1px solid rgba(255, 247, 232, 0.34);
+  background: rgba(24, 20, 18, 0.64);
+  color: rgba(255, 249, 238, 0.96);
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 0.77rem;
+  font-weight: 700;
+}
+
+.tap-hint-demo {
+  position: relative;
+  width: min(420px, 92vw);
+  height: 88px;
+  border-radius: 12px;
+}
+
+.tap-row-shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255, 116, 76, 0.9), rgba(227, 72, 46, 0.9));
+  animation: hint-row-press 1.5s ease-in-out infinite;
+}
+
+.tap-finger {
+  position: absolute;
+  left: 50%;
+  top: -4px;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.32));
+  animation: hint-finger-tap 1.5s ease-in-out infinite;
 }
 
 .list-footer {
@@ -229,6 +328,17 @@ main {
   cursor: pointer;
   position: relative;
   padding-left: 30px;
+}
+
+.why-athkar-btn {
+  border: 1px solid rgba(255, 247, 232, 0.34);
+  background: rgba(0, 0, 0, 0.14);
+  color: rgba(255, 248, 236, 0.96);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .reset-btn::before {
@@ -331,6 +441,17 @@ main {
 .mode-toast-leave-to {
   opacity: 0;
   transform: translateX(-50%) translateY(-8px);
+}
+
+.overlay-fade-enter-active,
+.overlay-fade-leave-active {
+  transition: opacity 200ms ease, transform 220ms ease;
+}
+
+.overlay-fade-enter-from,
+.overlay-fade-leave-to {
+  opacity: 0;
+  transform: translateY(8px);
 }
 
 .install-prompt {
@@ -658,6 +779,34 @@ main {
   }
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes hint-finger-tap {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  40% {
+    transform: translateX(-50%) translateY(15px) scale(0.94);
+  }
+  60% {
+    transform: translateX(-50%) translateY(15px) scale(0.94);
+  }
+}
+
+@keyframes hint-row-press {
+  0%,
+  100% {
+    filter: brightness(1);
+    transform: scale(1);
+    background: linear-gradient(180deg, rgba(255, 116, 76, 0.9), rgba(227, 72, 46, 0.9));
+  }
+  42%,
+  62% {
+    filter: brightness(0.94);
+    transform: scale(0.992);
+    background: linear-gradient(180deg, rgba(227, 72, 46, 0.9), rgba(255, 116, 76, 0.9));
   }
 }
 
