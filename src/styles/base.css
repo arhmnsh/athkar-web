@@ -291,7 +291,8 @@ main {
   background: linear-gradient(180deg, var(--row-top), var(--row-bottom));
   transition:
     background 140ms ease,
-    filter 140ms ease;
+    filter 140ms ease,
+    transform 120ms ease;
 }
 
 .athkar-row:last-child {
@@ -369,6 +370,7 @@ main {
 .athkar-row:has(.body-hit:active) {
   background: linear-gradient(180deg, var(--row-bottom), var(--row-top));
   filter: brightness(0.96);
+  transform: translateY(1px) scale(0.996);
 }
 
 .athkar-row.is-complete:has(.body-hit:active) {
