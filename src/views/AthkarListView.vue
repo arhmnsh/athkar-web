@@ -16,8 +16,10 @@ import {
 
 const router = useRouter();
 const showConfetti = ref(false);
+const showOnboarding = ref(false);
 let confettiTimer = null;
 const LIST_SCROLL_KEY = 'athkar-list-scroll-y';
+const ONBOARDING_SEEN_KEY = 'athkar-onboarding-seen-v1';
 
 function saveListScroll() {
   try {
@@ -80,6 +82,11 @@ onBeforeUnmount(() => {
 
 onMounted(() => {
   restoreListScroll();
+  try {
+    showOnboarding.value = localStorage.getItem(ONBOARDING_SEEN_KEY) !== '1';
+  } catch {
+    showOnboarding.value = true;
+  }
 });
 
 function handleIncrement(athkar) {
@@ -132,10 +139,35 @@ function resetCounters() {
   }
   resetAllCounts();
 }
+
+function dismissOnboarding() {
+  showOnboarding.value = false;
+  try {
+    localStorage.setItem(ONBOARDING_SEEN_KEY, '1');
+  } catch {
+    // ignore storage failures
+  }
+}
 </script>
 
 <template>
   <section>
+    <section v-if="showOnboarding" class="onboarding-panel" aria-live="polite">
+      <h2>Morning & evening adhkar</h2>
+      <p>
+        These are daily adhkar for the morning and evening. Regular recitation strengthens
+        remembrance, protection, and gratitude.
+      </p>
+      <p class="hadith">
+        “Whoever recites
+        <em>Qul Huwallahu Ahad, Qul A’udhu bi-Rabbil-Falaq, and Qul A’udhu bi-Rabbin-Nas</em>
+        three times in the morning and evening, they will suffice him against everything.”
+        <span>Reported by Abu Dawud and al-Tirmidhi.</span>
+      </p>
+      <p class="tap-hint">Tip: tap a row to increment its count until completion.</p>
+      <button class="onboarding-dismiss" type="button" @click="dismissOnboarding">Got it</button>
+    </section>
+
     <div class="list-wrap">
       <AthkarListItem
         v-for="(athkar, index) in items"
