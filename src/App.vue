@@ -2,6 +2,7 @@
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
+import InstallPrompt from './components/InstallPrompt.vue';
 import ModeToggle from './components/ModeToggle.vue';
 
 const isHeaderHidden = ref(false);
@@ -57,5 +58,6 @@ onBeforeUnmount(() => {
         </Transition>
       </RouterView>
     </main>
+    <InstallPrompt />
   </div>
 </template>

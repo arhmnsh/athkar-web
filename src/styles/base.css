@@ -280,6 +280,76 @@ main {
   transform: translateX(-50%) translateY(-8px);
 }
 
+.install-prompt {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 14px;
+  z-index: 65;
+  padding: 12px 12px 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 247, 232, 0.22);
+  background: rgba(24, 20, 18, 0.84);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  display: grid;
+  gap: 10px;
+}
+
+.install-copy {
+  text-align: left;
+  direction: ltr;
+}
+
+.install-title {
+  margin: 0 0 3px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgba(255, 249, 238, 0.97);
+}
+
+.install-body {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: rgba(255, 247, 232, 0.84);
+}
+
+.install-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  direction: ltr;
+}
+
+.install-btn {
+  border: 1px solid rgba(255, 247, 232, 0.26);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 249, 238, 0.94);
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.install-btn.primary {
+  background: rgba(255, 117, 71, 0.92);
+  border-color: rgba(255, 170, 142, 0.62);
+  color: #fff9ef;
+}
+
+.install-prompt-enter-active,
+.install-prompt-leave-active {
+  transition: opacity 180ms ease, transform 240ms ease;
+}
+
+.install-prompt-enter-from,
+.install-prompt-leave-to {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
 .athkar-row {
   --rail-w: 62px;
   position: relative;
