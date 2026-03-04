@@ -26,8 +26,9 @@ export function initPosthogAnalytics(router) {
 
   const capturePageview = (path) => {
     requestAnimationFrame(() => {
+      const currentUrl = new URL(path, window.location.origin).toString();
       posthog.capture('$pageview', {
-        $current_url: path,
+        $current_url: currentUrl,
         site,
         site_domain: siteDomain,
       });
