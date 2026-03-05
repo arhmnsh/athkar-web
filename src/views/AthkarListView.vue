@@ -138,6 +138,15 @@ onMounted(() => {
   }
 });
 
+watch(
+  [showBenefitsModal, showTapHintOverlay],
+  ([benefitsOpen, hintOpen]) => {
+    const active = benefitsOpen || hintOpen;
+    window.dispatchEvent(new CustomEvent('athkar:onboarding-state', { detail: { active } }));
+  },
+  { immediate: true },
+);
+
 function handleIncrement(athkar) {
   const currentCount = getReadCount(athkar.id, currentMode.value);
   const willCompleteThisTap = currentCount < athkar.read_count && currentCount + 1 >= athkar.read_count;

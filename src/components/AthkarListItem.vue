@@ -61,7 +61,7 @@ const isComplete = computed(() => props.progress >= 100);
       <p class="side-counter">{{ currentCount }} / {{ athkar.read_count }}</p>
     </aside>
     <button class="body-hit" type="button" @click="emit('increment')">
-      <p class="arabic">{{ athkar.athkar_ar_display }}</p>
+      <p class="arabic notranslate" lang="ar" dir="rtl" translate="no">{{ athkar.athkar_ar_display }}</p>
     </button>
   </article>
 </template>

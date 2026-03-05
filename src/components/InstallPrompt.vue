@@ -3,11 +3,46 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
 const DISMISS_UNTIL_KEY = 'athkar-install-dismiss-until';
 const DISMISS_COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
+const BENEFITS_SEEN_KEY = 'athkar-benefits-seen-v1';
+const TAP_HINT_SEEN_KEY = 'athkar-taphint-seen-v1';
+const ONBOARDING_DONE_AT_KEY = 'athkar-onboarding-done-at';
+const ONBOARDING_PROMPT_DELAY_MS = 2 * 60 * 1000;
 
 const canShow = ref(false);
 const isInstalled = ref(false);
 const isIos = ref(false);
 const deferredInstallPrompt = ref(null);
+const onboardingActive = ref(true);
+
+function hasCompletedOnboarding() {
+  try {
+    return localStorage.getItem(BENEFITS_SEEN_KEY) === '1' && localStorage.getItem(TAP_HINT_SEEN_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
+
+function onboardingDelayPassed() {
+  try {
+    const raw = localStorage.getItem(ONBOARDING_DONE_AT_KEY);
+    const doneAt = raw ? Number(raw) : 0;
+    return Number.isFinite(doneAt) && doneAt > 0 && Date.now() - doneAt >= ONBOARDING_PROMPT_DELAY_MS;
+  } catch {
+    return false;
+  }
+}
+
+function ensureOnboardingDoneAt() {
+  try {
+    const raw = localStorage.getItem(ONBOARDING_DONE_AT_KEY);
+    if (raw) {
+      return;
+    }
+    localStorage.setItem(ONBOARDING_DONE_AT_KEY, String(Date.now()));
+  } catch {
+    // ignore storage failures
+  }
+}
 
 function detectIos() {
   const ua = navigator.userAgent || '';
@@ -42,6 +77,10 @@ function markDismissed() {
 
 function refreshVisibility() {
   isInstalled.value = detectStandalone();
+  if (!hasCompletedOnboarding() || onboardingActive.value || !onboardingDelayPassed()) {
+    canShow.value = false;
+    return;
+  }
   if (isInstalled.value || isDismissedRecently()) {
     canShow.value = false;
     return;
@@ -83,6 +122,14 @@ function onAppInstalled() {
   canShow.value = false;
 }
 
+function onOnboardingState(event) {
+  onboardingActive.value = !!event?.detail?.active;
+  if (!onboardingActive.value && hasCompletedOnboarding()) {
+    ensureOnboardingDoneAt();
+  }
+  refreshVisibility();
+}
+
 const promptTitle = computed(() =>
   isIos.value ? 'Add Athkār to Home Screen' : 'Install Athkār App',
 );
@@ -98,15 +145,26 @@ onMounted(() => {
 
   window.addEventListener('beforeinstallprompt', onBeforeInstallPrompt);
   window.addEventListener('appinstalled', onAppInstalled);
+  window.addEventListener('athkar:onboarding-state', onOnboardingState);
+
+  onboardingActive.value = !hasCompletedOnboarding();
+  if (!onboardingActive.value) {
+    ensureOnboardingDoneAt();
+  }
 
   setTimeout(() => {
     refreshVisibility();
   }, 2200);
+
+  setTimeout(() => {
+    refreshVisibility();
+  }, ONBOARDING_PROMPT_DELAY_MS + 2400);
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener('beforeinstallprompt', onBeforeInstallPrompt);
   window.removeEventListener('appinstalled', onAppInstalled);
+  window.removeEventListener('athkar:onboarding-state', onOnboardingState);
 });
 </script>
 

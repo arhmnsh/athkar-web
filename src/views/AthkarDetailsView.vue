@@ -28,7 +28,7 @@ const athkar = computed(() => {
 
       <section class="details-section">
         <h2 class="details-label">Arabic</h2>
-        <p class="arabic-block">{{ athkar.athkar_ar_display }}</p>
+        <p class="arabic-block notranslate" lang="ar" dir="rtl" translate="no">{{ athkar.athkar_ar_display }}</p>
       </section>
 
       <section class="details-section">
