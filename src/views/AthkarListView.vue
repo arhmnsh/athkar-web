@@ -281,15 +281,11 @@ function openBenefitsModal() {
             <span class="notranslate" lang="ar" dir="rtl" translate="no">
               عَلَيْكُنَّ بِالتَّسْبِيحِ وَالتَّهْلِيلِ وَالتَّقْدِيسِ، وَاعْقِدْنَ بِالْأَنَامِلِ فَإِنَّهُنَّ مَسْؤُولَاتٌ مُسْتَنْطَقَاتٌ
             </span>
-            <span>Narrated by Yusayrah. Abu Dawud 1501, al-Tirmidhi 3583. Graded hasan by al-Albani.</span>
-          </p>
-          <p class="benefits-hadith">
-            ʿAbdullah ibn ʿAmr said: “I saw the Messenger of Allah ﷺ counting the tasbih on his right hand.”
-            <span>Abu Dawud 1502, al-Tirmidhi 3411, an-Nasa'i 1355. Graded sahih by al-Albani.</span>
-          </p>
-          <p class="benefits-note">
-            So keep counting on your fingers as the Sunnah teaches, and tap a row here only to keep track of
-            where you are.
+            <span>
+              Narrated by Yusayrah. Abu Dawud 1501, al-Tirmidhi 3583. Graded hasan by al-Albani. Counting on
+              the fingers is the better way as taught in this hadith, so use this app to track your place and
+              still count each dhikr on your fingers.
+            </span>
           </p>
           <button class="benefits-close" type="button" @click="closeBenefitsModal">Continue</button>
         </article>
