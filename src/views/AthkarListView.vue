@@ -274,6 +274,23 @@ function openBenefitsModal() {
             three times in the morning and evening, they will suffice him against everything.”
             <span>Reported by Abu Dawud and al-Tirmidhi.</span>
           </p>
+          <h3 class="benefits-sunnah-title">Count on your fingers</h3>
+          <p class="benefits-hadith">
+            The Prophet ﷺ told the women: “Hold fast to tasbih, tahlil and taqdis, and count them on your
+            fingers, for they will be questioned and made to speak.”
+            <span class="notranslate" lang="ar" dir="rtl" translate="no">
+              عَلَيْكُنَّ بِالتَّسْبِيحِ وَالتَّهْلِيلِ وَالتَّقْدِيسِ، وَاعْقِدْنَ بِالْأَنَامِلِ فَإِنَّهُنَّ مَسْؤُولَاتٌ مُسْتَنْطَقَاتٌ
+            </span>
+            <span>Narrated by Yusayrah. Abu Dawud 1501, al-Tirmidhi 3583. Graded hasan by al-Albani.</span>
+          </p>
+          <p class="benefits-hadith">
+            ʿAbdullah ibn ʿAmr said: “I saw the Messenger of Allah ﷺ counting the tasbih on his right hand.”
+            <span>Abu Dawud 1502, al-Tirmidhi 3411, an-Nasa'i 1355. Graded sahih by al-Albani.</span>
+          </p>
+          <p class="benefits-note">
+            So keep counting on your fingers as the Sunnah teaches, and tap a row here only to keep track of
+            where you are.
+          </p>
           <button class="benefits-close" type="button" @click="closeBenefitsModal">Continue</button>
         </article>
       </div>
@@ -286,6 +303,10 @@ function openBenefitsModal() {
           <div class="tap-finger">👆</div>
         </div>
         <p dir="ltr">Tap a row to increment its count.</p>
+        <p class="tap-hint-sunnah" dir="ltr">
+          Still count on your fingers. The Prophet ﷺ counted the tasbih on his right hand and told us the
+          fingers will be asked to speak. (Abu Dawud 1501, 1502)
+        </p>
         <button type="button" class="tap-hint-close" dir="ltr">Got it</button>
       </div>
     </transition>

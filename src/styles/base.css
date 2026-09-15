@@ -205,6 +205,28 @@ main {
   color: rgba(255, 251, 243, 0.82);
 }
 
+.benefits-hadith .notranslate {
+  text-align: right;
+  font-size: 0.98rem;
+  line-height: 1.9;
+  color: rgba(255, 253, 247, 0.98);
+}
+
+.benefits-sunnah-title {
+  margin: 14px 0 2px;
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: rgba(255, 251, 243, 0.97);
+}
+
+.benefits-note {
+  margin: 0 0 12px;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: rgba(255, 251, 243, 0.86);
+}
+
 .benefits-close {
   border: 1px solid rgba(255, 255, 255, 0.35);
   background: rgba(255, 255, 255, 0.16);
@@ -238,6 +260,17 @@ main {
   color: rgba(255, 250, 242, 0.98);
   direction: ltr;
   unicode-bidi: plaintext;
+}
+
+.tap-hint-overlay .tap-hint-sunnah {
+  max-width: 320px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: rgba(24, 20, 18, 0.64);
+  font-size: 0.76rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: rgba(255, 250, 242, 0.92);
 }
 
 .tap-hint-close {
