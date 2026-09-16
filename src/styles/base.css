@@ -666,15 +666,22 @@ main {
 }
 
 .details-hit svg {
-  width: 19px;
-  height: 19px;
-  fill: currentColor;
+  width: 23px;
+  height: 23px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.details-hit svg path {
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
+.details-hit svg .details-icon-ring {
+  fill: none;
+}
+
+.details-hit svg .details-icon-dot {
+  fill: currentColor;
+  stroke: none;
 }
 
 .body-hit {
