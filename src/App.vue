@@ -2,8 +2,11 @@
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
+import HowToSheet from './components/HowToSheet.vue';
 import InstallPrompt from './components/InstallPrompt.vue';
 import ModeToggle from './components/ModeToggle.vue';
+import { closeHowTo, onboarding, openHowTo, startOnboarding } from './data/onboardingStore';
+import { locale, t } from './data/i18n';
 
 const isHeaderHidden = ref(false);
 const route = useRoute();
@@ -36,20 +39,47 @@ watch(
 onMounted(() => {
   lastScrollY = window.scrollY || 0;
   window.addEventListener('scroll', handleScroll, { passive: true });
+  startOnboarding();
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll);
 });
+
+watch(
+  () => [onboarding.howToOpen, onboarding.tapHintOpen],
+  ([howToOpen, tapHintOpen]) => {
+    window.dispatchEvent(new CustomEvent('athkar:onboarding-state', {
+      detail: { active: howToOpen || tapHintOpen },
+    }));
+  },
+  { immediate: true },
+);
 </script>
 
 <template>
   <div class="app-shell" :class="{ 'is-header-hidden': isHeaderHidden }">
     <header class="app-topbar">
       <div class="topbar-left">
-        <h1 class="app-title">Athkār</h1>
+        <h1 class="app-title notranslate" :lang="locale" translate="no">{{ t('appName') }}</h1>
       </div>
-      <ModeToggle />
+      <div class="topbar-right">
+        <button
+          class="icon-btn guide-btn"
+          type="button"
+          :aria-label="t('howToRead')"
+          :title="t('howToRead')"
+          aria-haspopup="dialog"
+          :aria-expanded="onboarding.howToOpen"
+          @click="openHowTo"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4.5 5.5c2.7-.9 5.1-.3 7.5 1.3v12c-2.4-1.6-4.8-2.2-7.5-1.3z" />
+            <path d="M19.5 5.5c-2.7-.9-5.1-.3-7.5 1.3v12c2.4-1.6 4.8-2.2 7.5-1.3z" />
+          </svg>
+        </button>
+        <ModeToggle />
+      </div>
     </header>
     <main>
       <RouterView v-slot="{ Component, route: activeRoute }">
@@ -58,6 +88,7 @@ onBeforeUnmount(() => {
         </Transition>
       </RouterView>
     </main>
+    <HowToSheet :open="onboarding.howToOpen" @close="closeHowTo" />
     <InstallPrompt />
   </div>
 </template>

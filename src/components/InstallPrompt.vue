@@ -1,6 +1,8 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
+import { locale, t } from '../data/i18n';
+
 const DISMISS_UNTIL_KEY = 'athkar-install-dismiss-until';
 const DISMISS_COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
 const BENEFITS_SEEN_KEY = 'athkar-benefits-seen-v1';
@@ -131,13 +133,11 @@ function onOnboardingState(event) {
 }
 
 const promptTitle = computed(() =>
-  isIos.value ? 'Add Athkār to Home Screen' : 'Install Athkār App',
+  isIos.value ? t('installTitleIos') : t('installTitleOther'),
 );
 
 const promptBody = computed(() =>
-  isIos.value
-    ? 'Open Share, then choose Add to Home Screen.'
-    : 'Install for quicker access and app-like experience.',
+  isIos.value ? t('installBodyIos') : t('installBodyOther'),
 );
 
 onMounted(() => {
@@ -170,7 +170,7 @@ onBeforeUnmount(() => {
 
 <template>
   <transition name="install-prompt">
-    <aside v-if="canShow" class="install-prompt" role="dialog" aria-live="polite">
+    <aside v-if="canShow" class="install-prompt" :dir="locale === 'ar' ? 'rtl' : 'ltr'" role="dialog" aria-live="polite">
       <div class="install-copy">
         <p class="install-title">{{ promptTitle }}</p>
         <p class="install-body">{{ promptBody }}</p>
@@ -182,9 +182,9 @@ onBeforeUnmount(() => {
           type="button"
           @click="installApp"
         >
-          Install
+          {{ t('install') }}
         </button>
-        <button class="install-btn" type="button" @click="dismissPrompt">Not now</button>
+        <button class="install-btn" type="button" @click="dismissPrompt">{{ t('notNow') }}</button>
       </div>
     </aside>
   </transition>

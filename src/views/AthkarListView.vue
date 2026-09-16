@@ -5,7 +5,9 @@ import { useRouter } from 'vue-router';
 import AthkarListItem from '../components/AthkarListItem.vue';
 import ConfettiOverlay from '../components/ConfettiOverlay.vue';
 import { athkarData } from '../data/athkarData';
-import { currentMode, resolveAthkarByMode } from '../data/modeStore';
+import { currentMode, MODE_THEME, resolveAthkarByMode } from '../data/modeStore';
+import { closeTapHint, onboarding } from '../data/onboardingStore';
+import { locale, t } from '../data/i18n';
 import {
   getProgress,
   getReadCount,
@@ -16,55 +18,8 @@ import {
 
 const router = useRouter();
 const showConfetti = ref(false);
-const showBenefitsModal = ref(false);
-const showTapHintOverlay = ref(false);
 let confettiTimer = null;
 const LIST_SCROLL_KEY = 'athkar-list-scroll-y';
-const BENEFITS_SEEN_KEY = 'athkar-benefits-seen-v1';
-const TAP_HINT_SEEN_KEY = 'athkar-taphint-seen-v1';
-
-const benefits = [
-  {
-    title: 'Fulfill the command of Allah',
-    body: 'Allah commanded remembrance in these two times, and the Prophet ﷺ guided the believers to this noble practice.',
-  },
-  {
-    title: 'Join creation in glorifying Allah',
-    body: 'Morning and evening are times when creation praises Allah, and the believer joins that worship consciously.',
-  },
-  {
-    title: "Appreciate Allah's greatness at the best times",
-    body: 'These transitions between night and day are signs of Allah’s power and perfect times for dhikr.',
-  },
-  {
-    title: 'Reaffirm tawhid and servitude',
-    body: 'Through adhkar, you renew your faith, dependence on Allah, and gratitude to Him every single day.',
-  },
-  {
-    title: 'Acquire blessings in your day',
-    body: 'Starting and ending your day with remembrance brings barakah in time, effort, and outcomes.',
-  },
-  {
-    title: 'Earn immense rewards',
-    body: 'Many authentic narrations mention major rewards for morning/evening adhkar, including protection and forgiveness.',
-  },
-  {
-    title: 'Enjoy well-being in this life and the next',
-    body: 'Consistent remembrance supports spiritual calm, resilience, and well-being in dunya and akhirah.',
-  },
-  {
-    title: 'Gain peace and contentment',
-    body: 'Dhikr softens the heart and helps handle stress, worry, and difficulty with stronger faith.',
-  },
-  {
-    title: 'Journey to Allah in these two times',
-    body: 'Morning and evening are stations of devotion where the believer renews intention and connection.',
-  },
-  {
-    title: 'Protect yourself from harm',
-    body: 'By Allah’s permission, these adhkar are among the strongest means of daily spiritual protection.',
-  },
-];
 
 function saveListScroll() {
   try {
@@ -101,6 +56,8 @@ const items = computed(() => {
   }));
 });
 
+const theme = computed(() => MODE_THEME[currentMode.value]);
+
 const allCompleted = computed(
   () => items.value.length > 0 && items.value.every((item) => item.currentCount >= item.read_count),
 );
@@ -125,27 +82,7 @@ onBeforeUnmount(() => {
   }
 });
 
-onMounted(() => {
-  restoreListScroll();
-  try {
-    const hasSeenBenefits = localStorage.getItem(BENEFITS_SEEN_KEY) === '1';
-    const hasSeenHint = localStorage.getItem(TAP_HINT_SEEN_KEY) === '1';
-    showBenefitsModal.value = !hasSeenBenefits;
-    showTapHintOverlay.value = hasSeenBenefits && !hasSeenHint;
-  } catch {
-    showBenefitsModal.value = true;
-    showTapHintOverlay.value = false;
-  }
-});
-
-watch(
-  [showBenefitsModal, showTapHintOverlay],
-  ([benefitsOpen, hintOpen]) => {
-    const active = benefitsOpen || hintOpen;
-    window.dispatchEvent(new CustomEvent('athkar:onboarding-state', { detail: { active } }));
-  },
-  { immediate: true },
-);
+onMounted(restoreListScroll);
 
 function handleIncrement(athkar) {
   const currentCount = getReadCount(athkar.id, currentMode.value);
@@ -191,40 +128,13 @@ function openDetails(athkar) {
 }
 
 function resetCounters() {
-  const confirmed = window.confirm('Reset all athkar counters?');
+  const confirmed = window.confirm(t('resetConfirm'));
   if (!confirmed) {
     return;
   }
   resetAllCounts();
 }
 
-function closeBenefitsModal() {
-  showBenefitsModal.value = false;
-  try {
-    localStorage.setItem(BENEFITS_SEEN_KEY, '1');
-  } catch {
-    // ignore storage failures
-  }
-  try {
-    const hasSeenHint = localStorage.getItem(TAP_HINT_SEEN_KEY) === '1';
-    showTapHintOverlay.value = !hasSeenHint;
-  } catch {
-    showTapHintOverlay.value = true;
-  }
-}
-
-function dismissTapHint() {
-  showTapHintOverlay.value = false;
-  try {
-    localStorage.setItem(TAP_HINT_SEEN_KEY, '1');
-  } catch {
-    // ignore storage failures
-  }
-}
-
-function openBenefitsModal() {
-  showBenefitsModal.value = true;
-}
 </script>
 
 <template>
@@ -238,16 +148,16 @@ function openBenefitsModal() {
         :total="items.length"
         :current-count="athkar.currentCount"
         :progress="athkar.progress"
+        :theme="theme"
         @increment="handleIncrement(athkar)"
         @details="openDetails(athkar)"
       />
     </div>
     <footer class="list-footer">
-      <button class="reset-btn" type="button" @click="resetCounters">Reset counters</button>
-      <button class="why-athkar-btn" type="button" @click="openBenefitsModal">Why read athkar?</button>
+      <button class="reset-btn" type="button" @click="resetCounters">{{ t('resetCounters') }}</button>
       <div class="byline-wrap">
         <a class="app-byline name" href="https://arhmn.sh" target="_blank" rel="noopener noreferrer">
-          by AbdurRahaman Shah
+          {{ t('byline') }}
         </a>
         <a class="app-byline site" href="https://arhmn.sh" target="_blank" rel="noopener noreferrer">
           arhmn.sh
@@ -257,57 +167,19 @@ function openBenefitsModal() {
     <ConfettiOverlay :visible="showConfetti" />
 
     <transition name="overlay-fade">
-      <div v-if="showBenefitsModal" class="overlay-backdrop" @click.self="closeBenefitsModal">
-        <article class="benefits-modal" role="dialog" aria-modal="true" aria-label="Benefits of athkar">
-          <div class="benefits-content">
-            <h2>10 reasons to read morning and evening adhkar</h2>
-            <p class="benefits-intro">
-              Morning and evening adhkar strengthen faith, protection, and gratitude throughout the day.
-            </p>
-            <ol>
-              <li v-for="(reason, idx) in benefits" :key="reason.title">
-                <h3>{{ idx + 1 }}. {{ reason.title }}</h3>
-                <p>{{ reason.body }}</p>
-              </li>
-            </ol>
-            <p class="benefits-hadith">
-              “Whoever recites Qul Huwallahu Ahad, Qul A'udhu bi-Rabbil-Falaq and Qul A'udhu bi-Rabbin-Nas
-              three times in the morning and evening, they will suffice him against everything.”
-              <span>Reported by Abu Dawud and al-Tirmidhi.</span>
-            </p>
-            <h3 class="benefits-sunnah-title">Count on your fingers</h3>
-            <p class="benefits-hadith">
-              The Prophet ﷺ told the women: “Hold fast to tasbih, tahlil and taqdis, and count them on your
-              fingers, for they will be questioned and made to speak.”
-              <span class="notranslate" lang="ar" dir="rtl" translate="no">
-                عَلَيْكُنَّ بِالتَّسْبِيحِ وَالتَّهْلِيلِ وَالتَّقْدِيسِ، وَاعْقِدْنَ بِالْأَنَامِلِ فَإِنَّهُنَّ مَسْؤُولَاتٌ مُسْتَنْطَقَاتٌ
-              </span>
-              <span>
-                Narrated by Yusayrah. Abu Dawud 1501, al-Tirmidhi 3583. Graded hasan by al-Albani. Counting on
-                the fingers is the better way as taught in this hadith, so use this app to track your place and
-                still count each dhikr on your fingers.
-              </span>
-            </p>
-          </div>
-          <div class="benefits-actions">
-            <button class="benefits-close" type="button" @click="closeBenefitsModal">Continue</button>
-          </div>
-        </article>
-      </div>
-    </transition>
-
-    <transition name="overlay-fade">
-      <div v-if="showTapHintOverlay && !showBenefitsModal" class="tap-hint-overlay" @click="dismissTapHint">
+      <div
+        v-if="onboarding.tapHintOpen"
+        class="tap-hint-overlay"
+        :dir="locale === 'ar' ? 'rtl' : 'ltr'"
+        @click="closeTapHint"
+      >
         <div class="tap-hint-demo" aria-hidden="true">
           <div class="tap-row-shadow" />
           <div class="tap-finger">👆</div>
         </div>
-        <p dir="ltr">Tap anywhere on a passage to count one recitation.</p>
-        <p class="tap-hint-sunnah" dir="ltr">
-          Still count on your fingers. The Prophet ﷺ counted the tasbih on his right hand and told us the
-          fingers will be asked to speak. (Abu Dawud 1501, 1502)
-        </p>
-        <button type="button" class="tap-hint-close" dir="ltr">Got it</button>
+        <p>{{ t('tapHint') }}</p>
+        <p class="tap-hint-sunnah">{{ t('tapHintSunnah') }}</p>
+        <button type="button" class="tap-hint-close">{{ t('gotIt') }}</button>
       </div>
     </transition>
   </section>

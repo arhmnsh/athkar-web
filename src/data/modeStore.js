@@ -7,18 +7,24 @@ export const EVENING_MODE = 'evening';
 const MORNING_START_HOUR = 5;
 const EVENING_START_HOUR = 12;
 
-const MODE_THEME = {
+export const MODE_THEME = {
   [MORNING_MODE]: {
-    appTop: '#d93a2d',
-    appBottom: '#e07130',
-    topbar: '#de3d2f',
-    chrome: '#de3d2f',
+    appTop: '#203239',
+    appBottom: '#2b4246',
+    topbar: '#17272d',
+    chrome: '#17272d',
+    rowHue: [190, 182],
+    rowSaturation: 24,
+    rowLightness: [21, 25],
   },
   [EVENING_MODE]: {
-    appTop: '#e06f32',
-    appBottom: '#da8c3d',
-    topbar: '#de3d2f',
-    chrome: '#de3d2f',
+    appTop: '#1b2a35',
+    appBottom: '#263944',
+    topbar: '#15232d',
+    chrome: '#15232d',
+    rowHue: [205, 214],
+    rowSaturation: 24,
+    rowLightness: [19, 23],
   },
 };
 
