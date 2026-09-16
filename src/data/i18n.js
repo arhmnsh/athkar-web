@@ -48,6 +48,7 @@ const STRINGS = {
     eveningToast: 'Evening athkar',
     resetCounters: 'Reset counters',
     resetConfirm: 'Reset all athkar counters?',
+    openRuqyah: 'Open Ruqyah',
     byline: 'by AbdurRahaman Shah',
 
     tapHint: 'Tap anywhere on a passage to count one recitation.',
@@ -131,6 +132,7 @@ const STRINGS = {
     eveningToast: 'أذكار المساء',
     resetCounters: 'إعادة ضبط العدّادات',
     resetConfirm: 'هل تريد إعادة ضبط جميع عدّادات الأذكار؟',
+    openRuqyah: 'فتح تطبيق الرقية',
     byline: 'بقلم عبدالرحمن شاه',
 
     tapHint: 'اضغط في أي مكان على السطر لعدّ قراءة واحدة.',

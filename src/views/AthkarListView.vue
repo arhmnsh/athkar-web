@@ -155,6 +155,7 @@ function resetCounters() {
     </div>
     <footer class="list-footer">
       <button class="reset-btn" type="button" @click="resetCounters">{{ t('resetCounters') }}</button>
+      <a class="app-link-btn" href="https://ruqyah.arhmn.sh/">{{ t('openRuqyah') }}</a>
       <div class="byline-wrap">
         <a class="app-byline name" href="https://arhmn.sh" target="_blank" rel="noopener noreferrer">
           {{ t('byline') }}
