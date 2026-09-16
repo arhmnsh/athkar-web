@@ -56,7 +56,10 @@ const isComplete = computed(() => props.progress >= 100);
         :aria-label="`Open details for athkar ${athkar.id}`"
         @click="emit('details')"
       >
-        <span aria-hidden="true">❮</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 10.5v5.2" />
+          <circle cx="12" cy="7.35" r="0.7" />
+        </svg>
       </button>
       <p class="side-counter">{{ currentCount }} / {{ athkar.read_count }}</p>
     </aside>

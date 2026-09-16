@@ -259,35 +259,39 @@ function openBenefitsModal() {
     <transition name="overlay-fade">
       <div v-if="showBenefitsModal" class="overlay-backdrop" @click.self="closeBenefitsModal">
         <article class="benefits-modal" role="dialog" aria-modal="true" aria-label="Benefits of athkar">
-          <h2>10 reasons to read morning and evening adhkar</h2>
-          <p class="benefits-intro">
-            Morning and evening adhkar strengthen faith, protection, and gratitude throughout the day.
-          </p>
-          <ol>
-            <li v-for="(reason, idx) in benefits" :key="reason.title">
-              <h3>{{ idx + 1 }}. {{ reason.title }}</h3>
-              <p>{{ reason.body }}</p>
-            </li>
-          </ol>
-          <p class="benefits-hadith">
-            “Whoever recites Qul Huwallahu Ahad, Qul A'udhu bi-Rabbil-Falaq and Qul A'udhu bi-Rabbin-Nas
-            three times in the morning and evening, they will suffice him against everything.”
-            <span>Reported by Abu Dawud and al-Tirmidhi.</span>
-          </p>
-          <h3 class="benefits-sunnah-title">Count on your fingers</h3>
-          <p class="benefits-hadith">
-            The Prophet ﷺ told the women: “Hold fast to tasbih, tahlil and taqdis, and count them on your
-            fingers, for they will be questioned and made to speak.”
-            <span class="notranslate" lang="ar" dir="rtl" translate="no">
-              عَلَيْكُنَّ بِالتَّسْبِيحِ وَالتَّهْلِيلِ وَالتَّقْدِيسِ، وَاعْقِدْنَ بِالْأَنَامِلِ فَإِنَّهُنَّ مَسْؤُولَاتٌ مُسْتَنْطَقَاتٌ
-            </span>
-            <span>
-              Narrated by Yusayrah. Abu Dawud 1501, al-Tirmidhi 3583. Graded hasan by al-Albani. Counting on
-              the fingers is the better way as taught in this hadith, so use this app to track your place and
-              still count each dhikr on your fingers.
-            </span>
-          </p>
-          <button class="benefits-close" type="button" @click="closeBenefitsModal">Continue</button>
+          <div class="benefits-content">
+            <h2>10 reasons to read morning and evening adhkar</h2>
+            <p class="benefits-intro">
+              Morning and evening adhkar strengthen faith, protection, and gratitude throughout the day.
+            </p>
+            <ol>
+              <li v-for="(reason, idx) in benefits" :key="reason.title">
+                <h3>{{ idx + 1 }}. {{ reason.title }}</h3>
+                <p>{{ reason.body }}</p>
+              </li>
+            </ol>
+            <p class="benefits-hadith">
+              “Whoever recites Qul Huwallahu Ahad, Qul A'udhu bi-Rabbil-Falaq and Qul A'udhu bi-Rabbin-Nas
+              three times in the morning and evening, they will suffice him against everything.”
+              <span>Reported by Abu Dawud and al-Tirmidhi.</span>
+            </p>
+            <h3 class="benefits-sunnah-title">Count on your fingers</h3>
+            <p class="benefits-hadith">
+              The Prophet ﷺ told the women: “Hold fast to tasbih, tahlil and taqdis, and count them on your
+              fingers, for they will be questioned and made to speak.”
+              <span class="notranslate" lang="ar" dir="rtl" translate="no">
+                عَلَيْكُنَّ بِالتَّسْبِيحِ وَالتَّهْلِيلِ وَالتَّقْدِيسِ، وَاعْقِدْنَ بِالْأَنَامِلِ فَإِنَّهُنَّ مَسْؤُولَاتٌ مُسْتَنْطَقَاتٌ
+              </span>
+              <span>
+                Narrated by Yusayrah. Abu Dawud 1501, al-Tirmidhi 3583. Graded hasan by al-Albani. Counting on
+                the fingers is the better way as taught in this hadith, so use this app to track your place and
+                still count each dhikr on your fingers.
+              </span>
+            </p>
+          </div>
+          <div class="benefits-actions">
+            <button class="benefits-close" type="button" @click="closeBenefitsModal">Continue</button>
+          </div>
         </article>
       </div>
     </transition>
@@ -298,7 +302,7 @@ function openBenefitsModal() {
           <div class="tap-row-shadow" />
           <div class="tap-finger">👆</div>
         </div>
-        <p dir="ltr">Tap a row to increment its count.</p>
+        <p dir="ltr">Tap anywhere on a passage to count one recitation.</p>
         <p class="tap-hint-sunnah" dir="ltr">
           Still count on your fingers. The Prophet ﷺ counted the tasbih on his right hand and told us the
           fingers will be asked to speak. (Abu Dawud 1501, 1502)

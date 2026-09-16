@@ -2,8 +2,9 @@
 
 Responsive Vue app for athkar tracking with:
 - Clear-style stacked list UI
-- Tap row to increment progress (`readed_count` up to `read_count`)
-- Right-side chevron to open athkar details
+- Tap anywhere on a passage to count each recitation
+- Suggested counts mark a passage complete; counters continue beyond them
+- Info control to open athkar details
 - Details with Arabic, pronunciation, translation, source, and evening variants when available
 - Progress persisted in `localStorage`
 - PWA support (installable + cached offline shell)
