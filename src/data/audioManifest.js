@@ -4,14 +4,13 @@ export const AUDIO_SOURCE_LABEL = 'Mishary Alafasy · offline audio';
 export const LOCAL_AUDIO_BASE = '/audio';
 const LOCAL_QURAN_BASE = `${LOCAL_AUDIO_BASE}/quran`;
 const LOCAL_ATHKAR_BASE = `${LOCAL_AUDIO_BASE}/athkar`;
-const REMOTE_QURAN_BASE = 'https://everyayah.com/data/Alafasy_128kbps';
 const REMOTE_ATHKAR_BASE = 'https://archive.org/download/azkar-al-sabah-1425';
 const REMOTE_RUQYAH_BASE = 'https://archive.org/download/ruqia-alafasy';
 
 const QURAN_AUDIO = Object.freeze({
-  1: { surah: 112, from: 1, to: 4 },
-  2: { surah: 113, from: 1, to: 5 },
-  3: { surah: 114, from: 1, to: 6 },
+  1: { file: 'passages/ikhlas.mp3' },
+  2: { file: 'passages/falaq.mp3' },
+  3: { file: 'passages/nas.mp3' },
 });
 
 // These files are the corresponding Mishary Alafasy tracks from the public morning-athkar
@@ -42,21 +41,9 @@ const ATHKAR_AUDIO = Object.freeze({
   24: { file: '24.mp3', label_en: 'Allah’s perfect words', label_ar: 'كلمات الله التامات' },
 });
 
-function padded(value) {
-  return String(value).padStart(3, '0');
-}
-
-function quranTracks(passage, base) {
-  if (!passage) return [];
-  return Array.from({ length: passage.to - passage.from + 1 }, (_, offset) => {
-    const ayah = passage.from + offset;
-    return `${base}/${padded(passage.surah)}${padded(ayah)}.mp3`;
-  });
-}
-
 export function audioTracksForItem(item) {
   const quran = QURAN_AUDIO[item?.id];
-  if (quran) return quranTracks(quran, LOCAL_QURAN_BASE);
+  if (quran) return [`${LOCAL_QURAN_BASE}/${quran.file}`];
 
   const audio = ATHKAR_AUDIO[item?.id];
   if (!audio) return [];
@@ -84,9 +71,7 @@ export function audioLabelForItem(item, language = 'en') {
 export function audioDownloadEntriesForItem(item) {
   const quran = QURAN_AUDIO[item?.id];
   if (quran) {
-    const local = quranTracks(quran, LOCAL_QURAN_BASE);
-    const remote = quranTracks(quran, REMOTE_QURAN_BASE);
-    return local.map((localPath, index) => ({ local: localPath, remote: remote[index] }));
+    return [{ local: `${LOCAL_QURAN_BASE}/${quran.file}`, remote: null }];
   }
 
   const audio = ATHKAR_AUDIO[item?.id];

@@ -24,6 +24,10 @@ async function download(entry) {
     return { status: 'cached', path: entry.local };
   }
 
+  if (!entry.remote) {
+    throw new Error(`Missing bundled audio ${entry.local}; restore the committed passage file before running this command.`);
+  }
+
   let response = null;
   let lastError = null;
   for (let attempt = 1; attempt <= 3; attempt += 1) {
