@@ -3,6 +3,8 @@ import { ref } from 'vue';
 // The Arabic passages remain Arabic-first. This module translates the surrounding app chrome and
 // selects Arabic automatically when the device language is Arabic, matching the Ruqyah app.
 // `?lang=ar` or `?lang=en` can be used to preview or share a specific interface language.
+const USER_LOCALE_KEY = 'athkar-user-locale-v1';
+
 function detectLocale() {
   try {
     const override = new URLSearchParams(window.location.search).get('lang');
@@ -11,6 +13,15 @@ function detectLocale() {
     }
   } catch {
     // ignore malformed URLs
+  }
+
+  try {
+    const saved = localStorage.getItem(USER_LOCALE_KEY);
+    if (saved === 'ar' || saved === 'en') {
+      return saved;
+    }
+  } catch {
+    // ignore storage errors
   }
 
   try {
@@ -33,6 +44,19 @@ export function toArabicDigits(value) {
 
 export const locale = ref(typeof window === 'undefined' ? 'en' : detectLocale());
 
+export function setLocale(lang) {
+  if (lang !== 'ar' && lang !== 'en') return;
+  locale.value = lang;
+  try {
+    localStorage.setItem(USER_LOCALE_KEY, lang);
+  } catch {
+    // ignore storage errors
+  }
+  if (typeof document !== 'undefined') {
+    document.documentElement.setAttribute('lang', lang);
+  }
+}
+
 if (typeof document !== 'undefined') {
   document.documentElement.setAttribute('dir', 'rtl');
   document.documentElement.setAttribute('lang', locale.value);
@@ -44,6 +68,11 @@ const STRINGS = {
     howToRead: 'How to use',
     settings: 'Settings',
     done: 'Done',
+
+    languageLabel: 'Language',
+    languageHelp: 'Interface language for buttons, settings, and guidance. The athkar themselves are always Arabic, with pronunciation and translation alongside.',
+    languageEn: 'English',
+    languageAr: 'العربية',
 
     fontSizeLabel: 'Text Size',
     fontSizeHelp: 'Adjust the size of the Arabic text. You can also pinch with two fingers anywhere on the list to scale it.',
@@ -140,6 +169,11 @@ const STRINGS = {
     howToRead: 'طريقة الاستخدام',
     settings: 'الإعدادات',
     done: 'تم',
+
+    languageLabel: 'اللغة',
+    languageHelp: 'لغة واجهة التطبيق للأزرار والإعدادات والتعليمات. نصوص الأذكار تظل دائمًا بالعربية.',
+    languageEn: 'English',
+    languageAr: 'العربية',
 
     fontSizeLabel: 'حجم الخط',
     fontSizeHelp: 'تعديل حجم النص العربي. يمكنك أيضًا استخدام إيماءة التكبير أو التصغير بإصبعين لتغيير الحجم.',

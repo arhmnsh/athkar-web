@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted } from 'vue';
 
-import { locale, t } from '../data/i18n';
+import { locale, setLocale, t } from '../data/i18n';
 import {
   FONT_SIZE_LARGE,
   FONT_SIZE_MEDIUM,
@@ -16,6 +16,11 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['close']);
+
+const languages = computed(() => [
+  { value: 'en', label: 'English', help: 'EN' },
+  { value: 'ar', label: 'العربية', help: 'عربي' },
+]);
 
 const fontSizes = computed(() => [
   { value: FONT_SIZE_SMALL, label: t('fontSizeSmall'), help: 'A-' },
@@ -65,6 +70,23 @@ onBeforeUnmount(() => {
               type="button"
               :aria-pressed="settings.fontSize === option.value"
               @click="setFontSize(option.value)"
+            >
+              {{ option.label }}
+              <small>{{ option.help }}</small>
+            </button>
+          </div>
+        </div>
+
+        <div class="setting">
+          <p class="setting-label">{{ t('languageLabel') }}</p>
+          <p class="setting-help">{{ t('languageHelp') }}</p>
+          <div class="segmented" role="group" :aria-label="t('languageLabel')">
+            <button
+              v-for="option in languages"
+              :key="option.value"
+              type="button"
+              :aria-pressed="locale === option.value"
+              @click="setLocale(option.value)"
             >
               {{ option.label }}
               <small>{{ option.help }}</small>
