@@ -89,7 +89,7 @@ const STRINGS = {
     progressLabel: 'Progress through the athkar',
     resetCounters: 'Reset counters',
     resetConfirm: 'Reset all athkar counters?',
-    openRuqyah: 'Open Ruqyah',
+    openRuqyah: 'For protection & healing: Ruqyah',
     byline: 'by AbdurRahaman Shah',
 
     playAthkar: 'Play Athkar',
@@ -210,7 +210,7 @@ const STRINGS = {
     progressLabel: 'التقدم في الأذكار',
     resetCounters: 'إعادة ضبط العدّادات',
     resetConfirm: 'هل تريد إعادة ضبط جميع عدّادات الأذكار؟',
-    openRuqyah: 'فتح تطبيق الرقية',
+    openRuqyah: 'للتحصين والاستشفاء: الرقية',
     byline: 'بقلم عبدالرحمن شاه',
 
     playAthkar: 'تشغيل الأذكار',
