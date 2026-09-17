@@ -6,6 +6,13 @@ const LOCAL_QURAN_BASE = `${LOCAL_AUDIO_BASE}/quran`;
 const LOCAL_ATHKAR_BASE = `${LOCAL_AUDIO_BASE}/athkar`;
 const REMOTE_ATHKAR_BASE = 'https://archive.org/download/azkar-al-sabah-1425';
 const REMOTE_RUQYAH_BASE = 'https://archive.org/download/ruqia-alafasy';
+const AUDIO_VERSIONS = globalThis.__AUDIO_VERSIONS__ || {};
+
+function localAudioUrl(relativePath) {
+  const version = AUDIO_VERSIONS[relativePath];
+  const url = `${LOCAL_AUDIO_BASE}/${relativePath}`;
+  return version ? `${url}?v=${version}` : url;
+}
 
 const QURAN_AUDIO = Object.freeze({
   1: { file: 'passages/ikhlas.mp3' },
@@ -43,11 +50,11 @@ const ATHKAR_AUDIO = Object.freeze({
 
 export function audioTracksForItem(item) {
   const quran = QURAN_AUDIO[item?.id];
-  if (quran) return [`${LOCAL_QURAN_BASE}/${quran.file}`];
+  if (quran) return [localAudioUrl(`quran/${quran.file}`)];
 
   const audio = ATHKAR_AUDIO[item?.id];
   if (!audio) return [];
-  return [`${LOCAL_ATHKAR_BASE}/${audio.file}`];
+  return [localAudioUrl(`athkar/${audio.file}`)];
 }
 
 export function audioRepetitionsPerTrackForItem() {
