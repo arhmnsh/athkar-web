@@ -70,9 +70,14 @@ const isComplete = computed(() => props.progress >= 100);
           <circle class="details-icon-dot" cx="12" cy="8" r="1.1" />
         </svg>
       </button>
-      <p class="side-counter">{{ locale === 'ar' ? `${toArabicDigits(currentCount)} / ${toArabicDigits(athkar.read_count)}` : `${currentCount} / ${athkar.read_count}` }}</p>
+      <p class="side-counter" aria-hidden="true">{{ locale === 'ar' ? `${toArabicDigits(currentCount)} / ${toArabicDigits(athkar.read_count)}` : `${currentCount} / ${athkar.read_count}` }}</p>
     </aside>
-    <button class="body-hit" type="button" @click="emit('increment')">
+    <button
+      class="body-hit"
+      type="button"
+      :aria-label="t('countLabel', athkar.id + 1, currentCount, athkar.read_count)"
+      @click="emit('increment')"
+    >
       <p class="arabic notranslate" lang="ar" dir="rtl" translate="no">{{ athkar.athkar_ar_display }}</p>
     </button>
   </article>

@@ -57,6 +57,7 @@ const STRINGS = {
 
     backToList: 'Back to list',
     openDetailsFor: (n) => `Open details for athkar ${n}`,
+    countLabel: (n, current, total) => `Athkar ${n} — ${current} of ${total} recited. Tap to count one more.`,
     arabicLabel: 'Arabic',
     pronunciationLabel: 'Pronunciation',
     translationLabel: 'Translation',
@@ -141,6 +142,7 @@ const STRINGS = {
 
     backToList: 'العودة إلى القائمة',
     openDetailsFor: (n) => `فتح تفاصيل الذكر ${toArabicDigits(n)}`,
+    countLabel: (n, current, total) => `الذكر ${toArabicDigits(n)} — ${toArabicDigits(current)} من ${toArabicDigits(total)}. اضغط لإضافة مرة.`,
     arabicLabel: 'العربية',
     pronunciationLabel: 'النطق',
     translationLabel: 'الترجمة',
