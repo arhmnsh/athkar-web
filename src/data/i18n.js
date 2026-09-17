@@ -42,6 +42,17 @@ const STRINGS = {
   en: {
     appName: 'Athkār',
     howToRead: 'How to use',
+    settings: 'Settings',
+    done: 'Done',
+
+    fontSizeLabel: 'Text Size',
+    fontSizeHelp: 'Adjust the size of the Arabic text. You can also pinch with two fingers anywhere on the list to scale it.',
+    fontSizeSmall: 'Small',
+    fontSizeMedium: 'Normal',
+    fontSizeLarge: 'Large',
+    fontSizeXLarge: 'Extra',
+    fontSizeToast: (name) => `Text size: ${name}`,
+
     switchToMorning: 'Switch to morning athkar',
     switchToEvening: 'Switch to evening athkar',
     morningToast: 'Morning athkar',
@@ -127,6 +138,17 @@ const STRINGS = {
   ar: {
     appName: 'الأذكار',
     howToRead: 'طريقة الاستخدام',
+    settings: 'الإعدادات',
+    done: 'تم',
+
+    fontSizeLabel: 'حجم الخط',
+    fontSizeHelp: 'تعديل حجم النص العربي. يمكنك أيضًا استخدام إيماءة التكبير أو التصغير بإصبعين لتغيير الحجم.',
+    fontSizeSmall: 'صغير',
+    fontSizeMedium: 'متوسط',
+    fontSizeLarge: 'كبير',
+    fontSizeXLarge: 'كبير جدًا',
+    fontSizeToast: (name) => `حجم الخط: ${name}`,
+
     switchToMorning: 'التبديل إلى أذكار الصباح',
     switchToEvening: 'التبديل إلى أذكار المساء',
     morningToast: 'أذكار الصباح',

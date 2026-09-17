@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 
 import AthkarListItem from '../components/AthkarListItem.vue';
 import ConfettiOverlay from '../components/ConfettiOverlay.vue';
+import { usePinchFontResize } from '../utils/pinchGesture';
 import { athkarData } from '../data/athkarData';
 import { currentMode, MODE_THEME, resolveAthkarByMode } from '../data/modeStore';
 import { closeTapHint, onboarding } from '../data/onboardingStore';
@@ -75,14 +76,40 @@ watch(allCompleted, (next, prev) => {
   }
 });
 
+const fontToastVisible = ref(false);
+const fontToastText = ref('');
+let fontToastTimer = null;
+let cleanupPinch = null;
+
+function onFontChange(size) {
+  const sizeMap = {
+    small: t('fontSizeSmall'),
+    medium: t('fontSizeMedium'),
+    large: t('fontSizeLarge'),
+    xlarge: t('fontSizeXLarge'),
+  };
+  fontToastText.value = t('fontSizeToast', sizeMap[size] || size);
+  fontToastVisible.value = true;
+  if (fontToastTimer) clearTimeout(fontToastTimer);
+  fontToastTimer = setTimeout(() => {
+    fontToastVisible.value = false;
+    fontToastTimer = null;
+  }, 1600);
+}
+
 onBeforeUnmount(() => {
+  if (cleanupPinch) cleanupPinch();
+  if (fontToastTimer) clearTimeout(fontToastTimer);
   saveListScroll();
   if (confettiTimer) {
     clearTimeout(confettiTimer);
   }
 });
 
-onMounted(restoreListScroll);
+onMounted(() => {
+  restoreListScroll();
+  cleanupPinch = usePinchFontResize(window, onFontChange);
+});
 
 function handleIncrement(athkar) {
   const currentCount = getReadCount(athkar.id, currentMode.value);
@@ -181,6 +208,12 @@ function resetCounters() {
         <p>{{ t('tapHint') }}</p>
         <p class="tap-hint-sunnah">{{ t('tapHintSunnah') }}</p>
         <button type="button" class="tap-hint-close">{{ t('gotIt') }}</button>
+      </div>
+    </transition>
+
+    <transition name="mode-toast">
+      <div v-if="fontToastVisible" class="mode-toast font-toast" role="status" aria-live="polite">
+        {{ fontToastText }}
       </div>
     </transition>
   </section>

@@ -5,10 +5,12 @@ import { useRoute } from 'vue-router';
 import HowToSheet from './components/HowToSheet.vue';
 import InstallPrompt from './components/InstallPrompt.vue';
 import ModeToggle from './components/ModeToggle.vue';
+import SettingsSheet from './components/SettingsSheet.vue';
 import { closeHowTo, onboarding, openHowTo, startOnboarding } from './data/onboardingStore';
 import { locale, t } from './data/i18n';
 
 const isHeaderHidden = ref(false);
+const settingsOpen = ref(false);
 const route = useRoute();
 const routeTransition = ref('route-forward');
 let lastScrollY = 0;
@@ -79,6 +81,24 @@ watch(
             <path d="M12 17.1v.1" />
           </svg>
         </button>
+        <button
+          class="icon-btn settings-btn"
+          type="button"
+          :aria-label="t('settings')"
+          :title="t('settings')"
+          aria-haspopup="dialog"
+          :aria-expanded="settingsOpen"
+          @click="settingsOpen = true"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 7h9" />
+            <path d="M18 7h2" />
+            <circle cx="15.5" cy="7" r="2.1" />
+            <path d="M4 17h3" />
+            <path d="M12 17h8" />
+            <circle cx="9.5" cy="17" r="2.1" />
+          </svg>
+        </button>
         <ModeToggle />
       </div>
     </header>
@@ -90,6 +110,7 @@ watch(
       </RouterView>
     </main>
     <HowToSheet :open="onboarding.howToOpen" @close="closeHowTo" />
+    <SettingsSheet :open="settingsOpen" @close="settingsOpen = false" />
     <InstallPrompt />
   </div>
 </template>

@@ -5,6 +5,23 @@
   --text-strong: #f4f1e6;
   --text-soft: rgba(244, 241, 230, 0.86);
   --divider: rgba(244, 241, 230, 0.14);
+  --arabic-font-size: clamp(1.3rem, 2.6vw, 1.75rem);
+}
+
+:root[data-font-size="small"] {
+  --arabic-font-size: clamp(1.15rem, 2.1vw, 1.45rem);
+}
+
+:root[data-font-size="medium"] {
+  --arabic-font-size: clamp(1.3rem, 2.6vw, 1.75rem);
+}
+
+:root[data-font-size="large"] {
+  --arabic-font-size: clamp(1.5rem, 3.2vw, 2.15rem);
+}
+
+:root[data-font-size="xlarge"] {
+  --arabic-font-size: clamp(1.75rem, 3.8vw, 2.6rem);
 }
 
 * {
@@ -803,7 +820,7 @@ main {
   font-family: "Geeza Pro", "Noto Naskh Arabic", "Amiri", serif;
   direction: rtl;
   unicode-bidi: plaintext;
-  font-size: clamp(1.3rem, 2.6vw, 1.75rem);
+  font-size: var(--arabic-font-size);
   font-weight: 600;
   line-height: 1.78;
   letter-spacing: 0;
@@ -900,7 +917,7 @@ main {
   margin: 0;
   font-family: "Geeza Pro", "Noto Naskh Arabic", "Amiri", serif;
   direction: rtl;
-  font-size: clamp(1.36rem, 2.8vw, 2.04rem);
+  font-size: calc(var(--arabic-font-size) * 1.08);
   font-weight: 600;
   line-height: 1.82;
   color: rgba(255, 252, 244, 0.99) !important;
@@ -1071,4 +1088,151 @@ main {
     transform: translate3d(var(--drift), 110vh, 0) rotate(560deg);
     opacity: 0.9;
   }
+}
+
+/* ---------- settings sheet ---------- */
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(8, 14, 18, 0.45);
+  backdrop-filter: blur(6px);
+  display: grid;
+  align-items: end;
+  justify-items: center;
+}
+
+.sheet {
+  width: min(560px, 100%);
+  max-height: 88vh;
+  overflow: auto;
+  text-align: start;
+  border-radius: 20px 20px 0 0;
+  background: linear-gradient(180deg, rgba(32, 50, 57, 0.98), rgba(23, 39, 45, 0.98));
+  border: 1px solid rgba(244, 241, 230, 0.16);
+  border-bottom: 0;
+  box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.3);
+  padding: 14px 16px calc(18px + env(safe-area-inset-bottom, 0px));
+}
+
+.sheet-slide-enter-active,
+.sheet-slide-leave-active {
+  transition: opacity 200ms ease;
+}
+
+.sheet-slide-enter-active .sheet,
+.sheet-slide-leave-active .sheet {
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sheet-slide-enter-from,
+.sheet-slide-leave-to {
+  opacity: 0;
+}
+
+.sheet-slide-enter-from .sheet,
+.sheet-slide-leave-to .sheet {
+  transform: translateY(100%);
+}
+
+.sheet-handle {
+  width: 42px;
+  height: 4px;
+  border-radius: 99px;
+  background: rgba(244, 241, 230, 0.3);
+  margin: 0 auto 14px;
+}
+
+.sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.sheet-head h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--text-strong);
+}
+
+.sheet-close {
+  border: 1px solid rgba(244, 241, 230, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-strong);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.setting {
+  padding: 12px 0 6px;
+}
+
+.setting + .setting {
+  border-top: 1px solid var(--divider);
+}
+
+.setting-label {
+  margin: 0 0 2px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(244, 241, 230, 0.86);
+}
+
+.setting-help {
+  margin: 0 0 10px;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: rgba(244, 241, 230, 0.7);
+}
+
+.segmented {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.segmented button {
+  border: 0;
+  border-radius: 9px;
+  padding: 10px 8px;
+  background: transparent;
+  color: rgba(244, 241, 230, 0.78);
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: grid;
+  gap: 2px;
+  justify-items: center;
+  transition: background 160ms ease, color 160ms ease, transform 120ms ease;
+}
+
+.segmented button small {
+  font-size: 0.7rem;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.segmented button:active {
+  transform: scale(0.98);
+}
+
+.segmented button[aria-pressed="true"] {
+  background: var(--text-strong);
+  color: var(--topbar-bg);
+}
+
+.segmented button[aria-pressed="true"] small {
+  opacity: 0.75;
 }
