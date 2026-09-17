@@ -8,7 +8,7 @@ import { usePinchFontResize } from '../utils/pinchGesture';
 import { athkarData } from '../data/athkarData';
 import { currentMode, MODE_THEME, resolveAthkarByMode } from '../data/modeStore';
 import { closeTapHint, onboarding } from '../data/onboardingStore';
-import { locale, t } from '../data/i18n';
+import { locale, t, toArabicDigits } from '../data/i18n';
 import {
   getProgress,
   getReadCount,
@@ -58,6 +58,20 @@ const items = computed(() => {
 });
 
 const theme = computed(() => MODE_THEME[currentMode.value]);
+
+const totalRecitations = computed(() => items.value.reduce(
+  (total, item) => total + (Number(item.read_count) || 0),
+  0,
+));
+const completedRecitations = computed(() => items.value.reduce(
+  (total, item) => total + Math.min(Math.max(item.currentCount, 0), Number(item.read_count) || 0),
+  0,
+));
+const overallProgress = computed(() => (
+  totalRecitations.value
+    ? (completedRecitations.value / totalRecitations.value) * 100
+    : 0
+));
 
 const allCompleted = computed(
   () => items.value.length > 0 && items.value.every((item) => item.currentCount >= item.read_count),
@@ -166,6 +180,10 @@ function resetCounters() {
 
 <template>
   <section>
+    <div class="overall-progress-edge" role="progressbar" :aria-label="t('progressLabel')" aria-valuemin="0" aria-valuemax="100" :aria-valuenow="overallProgress">
+      <i :style="{ width: `${overallProgress}%` }" />
+      <span aria-live="polite">{{ locale === 'ar' ? `${toArabicDigits(completedRecitations)} / ${toArabicDigits(totalRecitations)}` : `${completedRecitations} / ${totalRecitations}` }}</span>
+    </div>
     <div class="list-wrap">
       <AthkarListItem
         v-for="(athkar, index) in items"

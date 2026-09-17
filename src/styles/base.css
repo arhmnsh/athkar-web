@@ -120,6 +120,49 @@ body {
   pointer-events: none;
 }
 
+.overall-progress-edge {
+  position: fixed;
+  z-index: 60;
+  inset: env(safe-area-inset-top, 0px) 0 auto;
+  height: 4px;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.overall-progress-edge i {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 0 999px 999px 0;
+  background: linear-gradient(90deg, rgba(244, 241, 230, 0.5), rgba(244, 241, 230, 0.95));
+  transition: width 320ms ease;
+}
+
+/* The count only shows once the top bar has scrolled away, so the bar stays a hairline while the
+   header is there to read and becomes legible when it is the only progress left on screen. */
+.overall-progress-edge span {
+  position: absolute;
+  inset-inline-end: 10px;
+  top: 1px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(23, 39, 45, 0.72);
+  color: rgba(255, 248, 232, 0.8);
+  font-size: 0.62rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+  direction: ltr;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.app-shell.is-header-hidden .overall-progress-edge span {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 main {
   min-height: 100vh;
   position: relative;
